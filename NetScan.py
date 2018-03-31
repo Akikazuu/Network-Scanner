@@ -7,20 +7,15 @@ import subprocess
 import re
 
 hosts = []
-
-low_port = 1
-max_port = 65535
-
-ports = [22, 23, 80, 999]
-
+ports = [22, 23, 80]
 _ip = '192.168.1.'
 hostbit = 0
 
 while hostbit <= 255:
-    ping = subprocess.Popen('ping -c 1 -t 0 ' + _ip + str(hostbit), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    ping = subprocess.Popen("ping -c 1 -t 0 " + _ip + str(hostbit), stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     (out, error) = ping.communicate()
     out = str(out)
-    find = re.search('Destination host unreachable', out)
+    find = re.search("Destination host unreachable", out)
     if find is None:
         hosts.append(_ip + str(hostbit))
     hostbit = hostbit + 1
